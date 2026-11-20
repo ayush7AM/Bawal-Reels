@@ -13,7 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
   /* ============ EDIT HERE ============ */
-  /* Payment link + price live in the <script> at the bottom (PAY_URL, PRICE, OLD_PRICE). */
+  /* Price + offer date live in the <script> at the bottom. Keep PRICE equal to the PRICE setting on the server. */
   :root{
     --paper:#fff3d6; --paper2:#ffe9b8; --ink:#17131a; --yel:#ffd21f; --pink:#ff4f8b; --red:#e2453b; --blue:#2b6bff; --green:#1f5a46;
     --mute:#5d5866; --card:#ffffff;
@@ -147,6 +147,22 @@
   footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center}
   footer a{font-weight:600}
 
+
+  /* checkout modal */
+  .modal{position:fixed;inset:0;z-index:100;background:rgba(23,19,26,.55);display:grid;place-items:center;padding:16px}
+  .modal[hidden]{display:none}
+  .mbox{position:relative;width:min(420px,100%);background:var(--paper);border:4px solid var(--ink);border-radius:24px;padding:26px;box-shadow:10px 10px 0 var(--yel)}
+  .mbox h3{font-size:30px;margin-bottom:8px}
+  .mbox .mute{color:var(--mute);font-size:14px}
+  .mbox label{display:block;font-weight:800;margin:16px 0 6px}
+  .ph{display:flex;border:3px solid var(--ink);border-radius:14px;overflow:hidden;background:#fff;margin-bottom:16px}
+  .ph span{padding:12px 12px;background:var(--paper2);font-weight:800;border-right:3px solid var(--ink)}
+  .ph input{flex:1;border:0;padding:12px;font:inherit;font-size:18px;outline:none;min-width:0}
+  .mbox .btn{width:100%;justify-content:center}
+  .msg{min-height:22px;margin-top:12px;font-weight:600;color:var(--red);font-size:14px}
+  .x{position:absolute;top:12px;right:12px;width:36px;height:36px;border:3px solid var(--ink);border-radius:10px;background:#fff;font-weight:800;cursor:pointer}
+  .btn[disabled]{opacity:.6;pointer-events:none}
+
   /* sticky mobile buy bar */
   .bar{position:fixed;left:12px;right:12px;bottom:12px;z-index:60;display:none}
   .bar .btn{width:100%;justify-content:space-between;font-size:16px;padding:12px 16px}
@@ -180,7 +196,7 @@
 <nav>
   <div class="wrap">
     <a class="logo" href="#top"><i>B</i>@backchodikamkar</a>
-    <a class="btn buy" href="https://payments.cashfree.com/forms/kitpack" target="_blank" rel="noopener"><span>Kit lo · <span class="p-now">₹99</span></span></a>
+    <a class="btn buy" href="#buy"><span>Kit lo · <span class="p-now">₹99</span></span></a>
   </div>
 </nav>
 
@@ -192,7 +208,7 @@
       <h1 class="disp">Chehra nahi.<br><span class="l2">Camera nahi.</span><br><span class="l3">Sirf bawaal.</span></h1>
       <p class="lead">"Tumhari bandi ki 500 din ki streak hai... tumhare naam ke account se." Aisi reels jo log <b>end tak dekhte hain</b>, comment mein lad padte hain aur dost ko tag karte hain. Script se cover tak, poora tareeka is kit mein.</p>
       <div class="cta">
-        <a class="btn buy" href="https://payments.cashfree.com/forms/kitpack" target="_blank" rel="noopener"><span class="ic">⚡</span><span>Kit lo · <span class="p-now">₹99</span><small>UPI · Card · Cashfree se secure</small></span></a>
+        <a class="btn buy" href="#buy"><span class="ic">⚡</span><span>Kit lo · <span class="p-now">₹99</span><small>UPI · Card · Cashfree se secure</small></span></a>
         <a class="btn ghost" href="#trend"><span class="ic">👀</span><span>Pehle reels dekho<small>Trend kya hai?</small></span></a>
       </div>
     </div>
@@ -277,8 +293,8 @@
         <li>Reel tracker sheet (bonus)</li>
         <li>Aage ke updates free</li>
       </ul>
-      <a class="btn buy" href="https://payments.cashfree.com/forms/kitpack" target="_blank" rel="noopener"><span class="ic">⚡</span><span>Kit lo · <span class="p-now">₹99</span><small>UPI · Card · Netbanking · Cashfree</small></span></a>
-      <p class="fine">Payment ke baad kit ka link tumhare email pe bheja jaata hai. Na mile toh payment screenshot Instagram pe <a href="https://www.instagram.com/backchodikamkar/" target="_blank" rel="noopener">@backchodikamkar</a> ko DM karo. Digital product hai, isliye access milne ke baad refund nahi hota.</p>
+      <a class="btn buy" href="#buy"><span class="ic">⚡</span><span>Kit lo · <span class="p-now">₹99</span><small>UPI · Card · Netbanking · Cashfree</small></span></a>
+      <p class="fine">Payment hote hi kit isi website pe khul jaata hai, koi email ya form nahi. Apna <b>Order ID</b> save kar lena, dusre phone pe kholne ke kaam aayega. Pehle se khareeda hai? <a href="kit.html">Kit yahan kholo</a>. Digital product hai, isliye access milne ke baad refund nahi hota.</p>
     </div>
   </div>
 </section>
@@ -289,12 +305,13 @@
     <span class="tag">Sawaal</span>
     <h2 class="disp rv">Jo sab poochte hain</h2>
     <div class="faq">
+      <details class="rv"><summary>Dusre phone ya laptop pe kaise kholun?</summary><p><a href="kit.html">Kit page</a> kholo aur apna Order ID daalo. Bas.</p></details>
       <details class="rv"><summary>Kya isse views pakke aayenge?</summary><p>Nahi, aur jo aisa bole us pe bharosa mat karna. Har reel nahi chalti. Kit tumhe wahi process deta hai jo hum har reel ke liye use karte hain, baaki tumhari story pe hai.</p></details>
-      <details class="rv"><summary>Payment ke baad kit kaise milega?</summary><p>Cashfree pe payment hote hi confirmation aata hai, aur kit ka link tumhare email pe bheja jaata hai. Kuch gadbad ho toh payment screenshot @backchodikamkar ko DM karo.</p></details>
+      <details class="rv"><summary>Payment ke baad kit kaise milega?</summary><p>Payment hote hi tum seedha kit page pe aa jaate ho aur poora kit wahin khul jaata hai. Koi email nahi, koi wait nahi. Page pe tumhara Order ID dikhega, use save kar lo.</p></details>
       <details class="rv"><summary>Mujhe editing ya coding nahi aati. Chalega?</summary><p>Haan. Tumhe sirf script chunni hai, voice banani hai aur prompt paste karna hai. Animation, captions aur sound Claude karta hai.</p></details>
       <details class="rv"><summary>Aur kya kharcha hoga?</summary><p>Claude ka paid plan aur ElevenLabs. ElevenLabs free plan se pehli kuch reels ban jaati hain. Ye dono kit ki price mein shamil nahi hain.</p></details>
       <details class="rv"><summary>Kya main bhi apne characters bana sakta hoon?</summary><p>Bilkul. Kit mein prompts hain jisse tumhara apna original style aur cast banta hai. Kisi aur page ka look copy karne ki zaroorat nahi.</p></details>
-      <details class="rv"><summary>Paise kat gaye par kit nahi mila?</summary><p>Spam folder check karo. Fir bhi na mile toh payment screenshot ke saath Instagram pe DM karo, hum theek kar denge.</p></details>
+      <details class="rv"><summary>Paise kat gaye par kit nahi khula?</summary><p><a href="kit.html">Kit page</a> pe apna Order ID daalo (Cashfree ke payment message mein milega), kit khul jaayega. Fir bhi dikkat ho toh Order ID ke saath Instagram pe DM karo.</p></details>
     </div>
   </div>
 </section>
@@ -302,28 +319,69 @@
 <footer>
   <div class="wrap">
     <span>© <span id="yr"></span> backchodikamkar · Instagram: <a href="https://www.instagram.com/backchodikamkar/" target="_blank" rel="noopener">@backchodikamkar</a></span>
-    <a class="btn buy" href="https://payments.cashfree.com/forms/kitpack" target="_blank" rel="noopener" style="font-size:14px;padding:8px 14px;box-shadow:var(--sh2)">Kit lo · <span class="p-now">₹99</span></a>
+    <a class="btn buy" href="#buy" style="font-size:14px;padding:8px 14px;box-shadow:var(--sh2)">Kit lo · <span class="p-now">₹99</span></a>
   </div>
 </footer>
 
-<div class="bar"><a class="btn buy" href="https://payments.cashfree.com/forms/kitpack" target="_blank" rel="noopener"><span>⚡ Kit lo · <span class="p-now">₹99</span></span><span style="font-size:12px;opacity:.7">Sirf launch week →</span></a></div>
+<div class="modal" id="pay" hidden>
+  <div class="mbox" role="dialog" aria-modal="true" aria-labelledby="payT">
+    <button class="x" type="button" aria-label="Band karo" data-close>✕</button>
+    <h3 class="disp" id="payT">Kit lo · <span class="p-now">₹99</span></h3>
+    <p class="mute">Cashfree ko payment ke liye mobile number chahiye. Hum ise kisi aur kaam mein use nahi karte.</p>
+    <form id="payForm" novalidate>
+      <label for="phone">Mobile number</label>
+      <div class="ph"><span>+91</span><input id="phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="10" placeholder="98XXXXXXXX" required></div>
+      <button class="btn" id="payBtn" type="submit"><span class="ic">⚡</span><span>Pay <span class="p-now">₹99</span><small>UPI · Card · Netbanking · Cashfree</small></span></button>
+      <p class="msg" id="payMsg" role="status" aria-live="polite"></p>
+    </form>
+    <p class="fine">Payment ke turant baad kit isi site pe khulega. Pehle se khareeda? <a href="kit.html">Kit kholo</a></p>
+  </div>
+</div>
+
+<div class="bar"><a class="btn buy" href="#buy"><span>⚡ Kit lo · <span class="p-now">₹99</span></span><span style="font-size:12px;opacity:.7">Sirf launch week →</span></a></div>
 
 <script>
   /* ============ EDIT HERE ============ */
-  const PAY_URL   = 'https://payments.cashfree.com/forms/kitpack';
-  const PRICE     = '₹99';
-  const OLD_PRICE = '₹199';   // price after the launch week
-  const OFFER_END = '27 Nov';  // last day of the ₹99 launch week
+  const PRICE     = '₹99';     // keep same as PRICE on the server (Cloudflare setting)
+  const OLD_PRICE = '₹199';    // price after the launch week
+  const OFFER_END = '27 Nov';  // last day of the launch week
   /* =================================== */
 
   document.querySelectorAll('.p-now').forEach(e => e.textContent = PRICE);
   document.querySelectorAll('.p-old, .p-old-plain').forEach(e => e.textContent = OLD_PRICE);
   document.querySelectorAll('.o-end').forEach(e => e.textContent = OFFER_END);
-  const ready = /^https?:\/\//.test(PAY_URL);
-  document.querySelectorAll('a.buy').forEach(a => {
-    if (ready) { a.href = PAY_URL; a.target = '_blank'; a.rel = 'noopener'; }
-    else { a.href = '#buy'; a.addEventListener('click', () => console.warn('Set PAY_URL to your Cashfree payment link.')); }
+
+  // ---- checkout: phone -> /api/create-order -> Cashfree hosted checkout (same tab) -> /kit.html
+  const modal = document.getElementById('pay'), form = document.getElementById('payForm'),
+        phone = document.getElementById('phone'), msg = document.getElementById('payMsg'), payBtn = document.getElementById('payBtn');
+  const openPay = e => { e.preventDefault(); modal.hidden = false; msg.textContent = ''; setTimeout(() => phone.focus(), 50); };
+  document.querySelectorAll('a.buy').forEach(a => a.addEventListener('click', openPay));
+  modal.addEventListener('click', e => { if (e.target === modal || e.target.hasAttribute('data-close')) modal.hidden = true; });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') modal.hidden = true; });
+  phone.addEventListener('input', () => { phone.value = phone.value.replace(/\D/g, '').slice(0, 10); });
+
+  function loadSdk() {
+    return window.Cashfree ? Promise.resolve() : new Promise((ok, bad) => {
+      const s = document.createElement('script'); s.src = 'https://sdk.cashfree.com/js/v3/cashfree.js';
+      s.onload = ok; s.onerror = () => bad(new Error('Payment window load nahi hui. Internet check karke dobara try karo.'));
+      document.head.appendChild(s);
+    });
+  }
+  form.addEventListener('submit', async e => {
+    e.preventDefault(); msg.textContent = '';
+    if (!/^[6-9]\d{9}$/.test(phone.value)) { msg.textContent = 'Sahi 10 digit mobile number daalo.'; return; }
+    payBtn.disabled = true;
+    try {
+      const r = await fetch('/api/create-order', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ phone: phone.value }) });
+      const o = await r.json().catch(() => ({}));
+      if (!r.ok || !o.payment_session_id) throw new Error(o.error || 'Payment shuru nahi ho paaya. Dobara try karo.');
+      try { localStorage.setItem('bawaal_last_order', o.order_id); } catch {}
+      if (o.mode === 'mock') { location.href = o.return_url; return; }      // local testing only
+      await loadSdk();
+      Cashfree({ mode: o.mode }).checkout({ paymentSessionId: o.payment_session_id, redirectTarget: '_self' });
+    } catch (err) { msg.textContent = err.message; payBtn.disabled = false; }
   });
+
   document.getElementById('yr').textContent = new Date().getFullYear();
 
   const hooks = ['Tumhari bandi ki 500 din ki streak hai...', 'Raat ke 2:47 baje almaari se awaaz aayi...', 'GF pregnant... uski mummy bhi!',
